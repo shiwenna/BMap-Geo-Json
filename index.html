@@ -4,7 +4,7 @@
  * @Author: Caoshuangna
  * @Date: 2020-08-10 17:06:09
  * @LastEditors: Caoshuangna
- * @LastEditTime: 2020-08-14 11:46:51
+ * @LastEditTime: 2020-09-16 10:22:55
 -->
 <!DOCTYPE html>
 <html>
@@ -66,8 +66,8 @@
   </style>
   <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=WPOQci8ySGioCEGt2zMtgjrLofr937E7"></script>
   <!--加载鼠标绘制工具-->
-  <script type="text/javascript" src="../../src/DrawingManager/DrawingManager.js"></script>
-  <link rel="stylesheet" href="../../src/DrawingManager/DrawingManager.min.css" />
+  <script type="text/javascript" src="src/DrawingManager/DrawingManager.js"></script>
+  <link rel="stylesheet" href="src/DrawingManager/DrawingManager.min.css" />
   <title>鼠标绘制工具</title>
 </head>
 
@@ -77,26 +77,41 @@
       <div id="map" style="height:100%;-webkit-transition: all 0.5s ease-in-out;transition: all 0.5s ease-in-out;">
       </div>
     </div>
-    
+
   </div>
-  <div style='width:18vw;display: inline-block; vertical-align: top;'>
-    
+  <div style='width: 19.5vw;
+  display: inline-block;
+  vertical-align: top;
+  overflow: auto;
+  height: inherit;'>
+
     <div id="result">
       <!-- <input type="button" value="获取绘制的覆盖物个数" onclick="alert(overlays.length)" /> -->
       <input type="button" value="清除所有覆盖物" onclick="clearAll()" />
     </div>
     <div>
-      生成geojson
+      <p style="font-size: 16px;">1. 生成经纬度json列表</p>
+      <strong>说明：单击地图右上角‘画多边形’按钮，单击地图上任一点开始，拖动红色区域覆盖地图，双击结束。下方区域显示所圈区域经纬度json，复制到文本并保存后缀为.geojson即可使用</strong>
 
     </div>
-    <p id='geojson'>
+    <p id='geojson' style="border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;">
 
     </p>
     <div>
-      坐标点经纬度
+      <p style="font-size: 16px;">2. 获取坐标点经纬度</p>
+      <strong>说明：单击地图右上角‘画点’按钮，单击地图上任一点。下方区域显示所点区域经纬度</strong>
 
     </div>
-    <p id='out_pre'>
+    <p id='out_pre' style="border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px 0;
+    text-align: center;
+    font-size: 14px;">
+
 
     </p>
   </div>
@@ -120,8 +135,9 @@
         })
         document.getElementById("geojson").innerHTML = JSON.stringify(geojson)
       }
-      if(e.overlay.point && e.overlay.point instanceof Object){
-        document.getElementById("out_pre").innerHTML = JSON.stringify(e.overlay.point)
+      if (e.overlay.point && e.overlay.point instanceof Object) {
+        // document.getElementById("out_pre").innerHTML = JSON.stringify(e.overlay.point)
+        document.getElementById("out_pre").innerHTML = `{lng: ${JSON.stringify(e.overlay.point.lng)}, lat: ${JSON.stringify(e.overlay.point.lat)}}`
 
       }
     };
